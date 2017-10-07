@@ -1,0 +1,124 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+
+    <f:view contentType="text/html">
+        <h:head>
+            <f:facet name="first">
+                <meta content='text/html; charset=UTF-8' http-equiv="Content-Type"/>
+            <h:outputStylesheet library="css" name="estilo.css"  />
+                <title>Home</title>
+            </f:facet>
+        </h:head>
+
+        <h:body>
+
+            <p:layout fullPage="true">
+
+                <p:layoutUnit position="north" size="100" resizable="false" collapsible="false">
+                    <h:panelGrid columns ="2">
+                    <h2> Sistema de Gerenciamento de Projetos de Pesquisa.</h2>
+                    <h:graphicImage library="images" name="logo_ifrs.png" styleClass="imagemLogo"/>
+                    </h:panelGrid>
+                </p:layoutUnit>
+
+                <p:layoutUnit position="south" size="50" closable="true" collapsible="true" styleClass="footer"> 
+                    <p>©2017 Instituto Federal do Rio Grande do Sul - Campus Porto Alegre</p>
+                </p:layoutUnit>
+
+                <p:layoutUnit position="west" size="185" header="Sistema JSF" collapsible="true">
+                    <h:form id="formMenu">
+
+                        <p:panelMenu style="width:300px">
+                            <p:submenu label="Cadastrar">
+                                <p:menuitem value="Produto" url="cadastrarProduto.xhtml" icon="ui-icon-clipboard" />
+                                <p:menuitem value="Usuário" url="cadastrarUsuario.xhtml"  icon="ui-icon-clipboard" />
+                            </p:submenu>
+                            <p:separator />
+                            <p:submenu label="Listar">
+                                <p:menuitem value="Produto" url="listarProdutos.xhtml" icon="ui-icon-disk" />
+                                <p:menuitem value="Usuário" url="listarUsuarios.xhtml"  icon="ui-icon-arrowrefresh-1-w" />
+                            </p:submenu>
+                            <p:separator />
+                            <p:submenu label="Operações"  >
+                                <p:submenu label="Relatórios" >
+                                    <p:menuitem value="Produtos" url="relatProduto" icon="ui-icon-print" />
+                                    <p:menuitem value="Usuários" url="relatUsuario" icon="ui-icon-document" />
+                                </p:submenu>
+                                <p:menuitem value="Sair" outcome="login" icon="ui-icon-home" />
+                            </p:submenu>
+                        </p:panelMenu>
+
+
+                    </h:form>
+                </p:layoutUnit>
+
+                <p:layoutUnit position="center">
+
+                    <h:form>
+                        <h:panelGrid id="grid" columns="1">
+                            <h:panelGrid columns="3">
+                                <p:outputLabel value="Nome: "/>
+                                <p:inputText id="nome" value="#{produtoBean.produto.nome}" required="true" label="nome"> 
+                                    <f:validateLength minimum="5" maximum="150" />
+                                </p:inputText>
+                                <p:message for="nome" />
+                            </h:panelGrid>
+
+                            <h:panelGrid  columns="4">
+                                <p:outputLabel value="Descrição: "/>
+                                <p:inputTextarea id="descricao" value="#{produtoBean.produto.descricao}" required="true" label="descricao" rows="3" cols="50" counter="display" maxlength="200" counterTemplate="restam {0} caractere(s)." autoResize="false" />
+                                <h:outputText id="display" />
+                                <p:message for="descricao" />
+                            </h:panelGrid>   
+
+                            <h:panelGrid  columns="3">
+                                <h:outputLabel for="menu" value="Categoria:" />
+                                <p:selectCheckboxMenu id="menu" value="#{produtoBean.selectedCategorias}" label="categorias"
+                                                      filter="true" filterMatchMode="startsWith" panelStyle="width:250px" required="true">
+                                    <f:selectItems value="#{produtoBean.categorias}" />
+                                </p:selectCheckboxMenu>
+                                <p:message for="menu" />
+                            </h:panelGrid> 
+
+                            <h:panelGrid columns="3">
+                                <p:outputLabel for="fornecedor" value="Fornecedor: " />
+                                <p:selectOneMenu id="fornecedor" value="#{produtoBean.fornecedor}" effect="fold" editable="false" required="true">
+                                    <f:selectItem itemLabel="Selecione" itemValue="" />
+                                    <f:selectItems value="#{produtoBean.fornecedores}" />
+                                </p:selectOneMenu>
+                                <p:message for="fornecedor" />
+                            </h:panelGrid>   
+
+                             <h:panelGrid columns="3">
+                             <p:outputLabel value="Unidade:" for="unidade" />
+                             <p:autoComplete id="unidade" dropdown="true" value="#{produtoBean.produto.unidade}" completeMethod="#{produtoBean.completeText}" required="true"/>
+                                         <p:message for="unidade" />
+                            </h:panelGrid> 
+                            
+                            <h:panelGrid columns="3">
+                                <p:outputLabel value="Valor Unitário" for="valorunit" />
+                                <p:inputNumber id="valorunit" value="#{produtoBean.produto.valorUnitario}" minValue="-1.0" maxValue="10000.0" required="true">  
+                    <p:ajax update="valorunit" />  
+                </p:inputNumber> 
+                                <p:message for="valorunit" />
+                             </h:panelGrid> 
+                            
+                            <h:panelGrid columns="2">
+                                <p:commandButton value="Ok" action="#{produtoBean.cadastrar()}" update="grid"/>
+                                <p:commandButton value="Limpar" action="#{produtoBean.limpar()}"/>
+                            </h:panelGrid>
+
+                        </h:panelGrid>
+
+                    </h:form>
+                </p:layoutUnit>
+
+            </p:layout>
+        </h:body>
+    </f:view>
+</html>
+

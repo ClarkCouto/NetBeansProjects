@@ -1,0 +1,52 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+    <f:view contentType="text/html">
+        <h:head>
+            <h:outputStylesheet library="css" name="estilo.css"  />
+            <title>Login SGPP</title>
+        </h:head>
+        <h:body> 
+            <p:layout fullPage="true">
+                <p:layoutUnit position="north" size="100" resizable="false" collapsible="false">
+                    <h:panelGrid columns ="2">
+                    <h2> Sistema de Gerenciamento de Projetos de Pesquisa.</h2>
+                    <h:graphicImage library="images" name="logo_ifrs.png" styleClass="imagemLogo"/>
+                    </h:panelGrid>
+                </p:layoutUnit>
+
+                <p:layoutUnit position="south" size="50" closable="true" collapsible="true" styleClass="footer"> 
+                    <p>© 2017 Instituto Federal do Rio Grande do Sul - Campus Porto Alegre</p>
+                </p:layoutUnit>
+
+                <p:layoutUnit position="center">
+                    <fieldset>
+                       <h:form id="formulario" styleClass="fieldsetLogin">
+                            <h:panelGrid columns ="1">
+                                <h:panelGrid columns ="2">
+                                    <p:outputLabel value="Login: "/>
+                                    <p:inputText id="identificador" value="#{usuarioBean.usuario.identificador}" required="true" label="identificador"/>
+                                </h:panelGrid>
+                                <h:panelGrid columns="2">
+                                    <p:outputLabel value="Senha: "/>
+                                    <p:password id="senha" value="#{usuarioBean.usuario.senha}" required="true" label="senha" feedback="true" inline="true" size="11"/>
+                                </h:panelGrid>
+                                <h:panelGrid columns="2">
+                                    <p:commandButton value="Entrar" action="#{usuarioBean.validar(usuario)}"  icon="ui-icon-disk"/>
+                                    <p:commandButton value="Limpar" action="#{usuarioBean.limpar()}" icon="ui-icon-refresh"/>
+                                </h:panelGrid>
+                                <h:panelGrid columns="2">
+                                    <p:commandButton value="Esqueci a senha" action="#{usuarioBean.resetSenha()}"  icon="ui-icon-disk"/>
+                                </h:panelGrid>
+                            </h:panelGrid>
+                        </h:form>
+                    </fieldset>
+                </p:layoutUnit>
+            </p:layout>
+        </h:body>
+    </f:view>
+</html>
+
